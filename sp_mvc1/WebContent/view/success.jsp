@@ -9,7 +9,7 @@
 <body>
 record has been inserted succesfully for customer ${employee.name}
 <br>
-<a href="return">Back</a>
+<a href="return">BackToHome </a>
 
 </body>
 </html>

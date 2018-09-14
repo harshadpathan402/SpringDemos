@@ -1,9 +1,13 @@
 package lambda;
 
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 
 public class ManageEmployee {
 	  private Session session;
@@ -76,6 +80,30 @@ public class ManageEmployee {
 	         session.close(); 
 	      }
 	      return employee;
+	   }
+	   
+	   
+	   /* Method to get all employees in the database */
+	   public List<Employee> getAllEmployees(){
+		   List<Employee> employees = null;
+	      Transaction tx = null;
+	      try {
+	    	 open();
+	         tx = session.beginTransaction();
+	         Query query = session.createQuery("from Employee");
+	         employees =   query.list();
+	         tx.commit();
+	      }catch (NumberFormatException e) {
+		         if (tx!=null) tx.rollback();
+		         e.getMessage(); 
+	      } 
+	      catch (HibernateException e) {
+	         if (tx!=null) tx.rollback();
+	         e.getCause(); 
+	      } finally {
+	         session.close(); 
+	      }
+	      return employees;
 	   }
 	   
 }
